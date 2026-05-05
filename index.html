@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capitalista · Flujos disponibles</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #FFFFFF;
+  color: #1A1A1A;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.wrap { max-width: 920px; margin: 0 auto; padding: 24px 20px 40px; }
+
+/* ---------- Header / brand ---------- */
+.brand-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 18px; margin-bottom: 28px;
+  border-bottom: 1px solid #E5E7EB;
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+}
+.brand-mark {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: #0F172A; color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 15px; letter-spacing: -0.02em;
+}
+.brand-text { line-height: 1; }
+.brand-text .name {
+  font-size: 16px; font-weight: 600; color: #0F172A;
+  letter-spacing: -0.01em; display: block; margin-bottom: 2px;
+}
+.brand-text .tag { font-size: 11px; color: #64748B; }
+.live-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; background: #F0FDF4; color: #15803D;
+  border-radius: 999px; font-size: 11px; font-weight: 500;
+  border: 1px solid #BBF7D0;
+}
+.live-pill::before {
+  content: ''; width: 6px; height: 6px; background: #22C55E; border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* ---------- Hero ---------- */
+.hero { margin-bottom: 28px; }
+.hero h1 {
+  font-size: 28px; font-weight: 600; color: #0F172A;
+  letter-spacing: -0.02em; margin-bottom: 6px;
+}
+.hero p { font-size: 14px; color: #475569; max-width: 580px; }
+
+/* ---------- KPIs ---------- */
+.kpis {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 36px;
+}
+.kpi {
+  background: #F8FAFC; border: 1px solid #E5E7EB;
+  border-radius: 8px; padding: 14px 16px;
+}
+.kpi-label { font-size: 11px; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.kpi-value { font-size: 18px; font-weight: 600; color: #0F172A; font-variant-numeric: tabular-nums; }
+.kpi-value.green { color: #15803D; }
+.kpi-value.amber { color: #B45309; }
+
+/* ---------- Section heading ---------- */
+.section-h {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin: 36px 0 14px;
+}
+.section-h h2 { font-size: 16px; font-weight: 600; color: #0F172A; letter-spacing: -0.01em; }
+.section-h .count { font-size: 12px; color: #64748B; }
+
+/* ---------- Legend ---------- */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 18px;
+  padding: 10px 14px; margin-bottom: 14px;
+  background: #FAFAFA; border: 1px solid #F1F5F9;
+  border-radius: 8px;
+}
+.legend-item {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px;
+}
+.legend-item small { color: #64748B; }
+
+/* ---------- Evidence band ---------- */
+.evidence {
+  margin: 36px 0 28px;
+  background: #0F172A; color: white;
+  border-radius: 12px; padding: 24px 28px;
+}
+.ev-h {
+  display: flex; justify-content: space-between; align-items: baseline;
+  flex-wrap: wrap; gap: 8px;
+  padding-bottom: 18px; margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.ev-h h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.ev-tag { font-size: 12px; color: #94A3B8; }
+.ev-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.ev-item { font-variant-numeric: tabular-nums; }
+.ev-num {
+  font-size: 26px; font-weight: 700; letter-spacing: -0.02em;
+  margin-bottom: 4px; color: white;
+}
+.ev-num.green { color: #4ADE80; }
+.ev-lbl {
+  font-size: 11px; color: #94A3B8;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+@media (max-width: 720px) {
+  .ev-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .ev-num { font-size: 22px; }
+  .evidence { padding: 18px 20px; }
+}
+
+/* ---------- Flow list (live) ---------- */
+.list { display: flex; flex-direction: column; gap: 10px; }
+.flow-card {
+  display: grid;
+  grid-template-columns: 56px 1fr 90px 90px 80px 80px 100px;
+  gap: 16px; align-items: center;
+  background: #FFFFFF; border: 1px solid #E5E7EB;
+  border-radius: 10px; padding: 16px 18px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.flow-card:hover { border-color: #C7D2FE; box-shadow: 0 1px 3px rgba(15,23,42,0.04); }
+.flow-num {
+  font-size: 13px; font-weight: 600; color: #6366F1;
+  background: #EEF2FF; border: 1px solid #DDD6FE;
+  border-radius: 6px; padding: 6px 0; text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.flow-info .name { font-size: 14px; font-weight: 500; color: #0F172A; margin-bottom: 4px; }
+.flow-cat-pill {
+  display: inline-block; padding: 2px 8px; background: #F1F5F9;
+  color: #475569; border-radius: 4px; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  font-weight: 500;
+}
+.flow-cat-pill.tipo-proc { background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+.flow-cat-pill.tipo-pers { background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; }
+.flow-cat-pill.tipo-b2b { background: #FFFBEB; color: #B45309; border: 1px solid #FCD34D; }
+.flow-num-r { text-align: right; font-variant-numeric: tabular-nums; }
+.flow-num-r .label { font-size: 10px; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+.flow-num-r .value { font-size: 14px; font-weight: 600; color: #0F172A; }
+.flow-num-r .value.green { color: #15803D; }
+.flow-num-r .value.amber { color: #B45309; }
+.flow-action button {
+  width: 100%; background: #0F172A; color: white; border: none;
+  padding: 9px 12px; border-radius: 6px; font-family: inherit;
+  font-size: 12px; font-weight: 500; cursor: pointer;
+  transition: background 0.15s;
+}
+.flow-action button:hover { background: #1E293B; }
+
+/* ---------- Track record (history) ---------- */
+.history-list { display: flex; flex-direction: column; gap: 6px; }
+.history-row {
+  display: grid;
+  grid-template-columns: 50px 1fr 80px 80px 70px 90px;
+  gap: 14px; align-items: center;
+  padding: 12px 16px;
+  background: #FAFAFA; border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.history-row .h-num {
+  font-size: 12px; color: #6366F1; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.history-row .h-name { font-size: 13px; color: #1E293B; }
+.history-row .h-name small { color: #94A3B8; font-size: 11px; }
+.history-row .h-val { text-align: right; font-variant-numeric: tabular-nums; color: #475569; font-size: 13px; }
+.history-row .h-val.green { color: #15803D; font-weight: 500; }
+.h-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; background: #F0FDF4; color: #15803D;
+  border-radius: 999px; font-size: 11px; font-weight: 500;
+  border: 1px solid #BBF7D0; justify-content: center;
+}
+.h-badge::before {
+  content: '✓'; font-size: 10px;
+}
+
+/* ---------- CTA ---------- */
+.cta {
+  margin: 40px 0 12px; padding: 28px;
+  background: linear-gradient(180deg, #FAFAFA 0%, #F1F5F9 100%);
+  border: 1px solid #E5E7EB; border-radius: 12px;
+  text-align: center;
+}
+.cta h3 { font-size: 18px; font-weight: 600; color: #0F172A; margin-bottom: 8px; letter-spacing: -0.01em; }
+.cta p { font-size: 13px; color: #475569; margin-bottom: 20px; }
+.cta button {
+  background: #0F172A; color: white; border: none;
+  padding: 12px 28px; border-radius: 8px; font-family: inherit;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+}
+.cta button:hover { background: #1E293B; }
+
+footer.foot {
+  margin-top: 40px; padding-top: 18px;
+  border-top: 1px solid #E5E7EB;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: #94A3B8;
+}
+.admin-toggle {
+  background: transparent; border: 1px solid #E5E7EB; color: #94A3B8;
+  padding: 5px 12px; font-family: inherit; font-size: 11px;
+  border-radius: 4px; cursor: pointer; transition: all 0.15s;
+}
+.admin-toggle:hover { border-color: #0F172A; color: #0F172A; }
+
+/* ---------- Admin panel ---------- */
+.admin {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 760px;
+  background: white; border-left: 1px solid #E5E7EB;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+  transform: translateX(100%); transition: transform 0.25s ease-out;
+  z-index: 50; display: flex; flex-direction: column;
+}
+.admin.open { transform: translateX(0); }
+.admin-h {
+  padding: 18px 24px; border-bottom: 1px solid #E5E7EB;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.admin-h h2 { font-size: 16px; font-weight: 600; color: #0F172A; }
+.admin-close {
+  background: transparent; border: none; font-size: 22px;
+  color: #64748B; cursor: pointer; padding: 0; line-height: 1;
+  width: 32px; height: 32px; border-radius: 4px;
+}
+.admin-close:hover { background: #F1F5F9; color: #0F172A; }
+.admin-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+.admin-actions {
+  padding: 14px 24px; border-top: 1px solid #E5E7EB;
+  display: flex; justify-content: space-between; gap: 8px;
+}
+.btn-primary {
+  background: #0F172A; color: white; border: none;
+  padding: 9px 18px; border-radius: 6px; font-family: inherit;
+  font-size: 13px; font-weight: 500; cursor: pointer;
+}
+.btn-primary:hover { background: #1E293B; }
+.btn-ghost {
+  background: transparent; border: 1px solid #E5E7EB; color: #475569;
+  padding: 9px 18px; border-radius: 6px; font-family: inherit;
+  font-size: 13px; cursor: pointer;
+}
+.btn-ghost:hover { border-color: #0F172A; color: #0F172A; }
+
+.admin-section-title {
+  font-size: 13px; font-weight: 600; color: #0F172A;
+  margin: 20px 0 10px; display: flex; align-items: baseline; gap: 8px;
+}
+.admin-section-title:first-child { margin-top: 0; }
+.admin-section-title small { color: #64748B; font-weight: 400; font-size: 11px; }
+
+.admin-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  font-size: 13px;
+}
+.admin-table th {
+  text-align: left; padding: 10px 12px; background: #F8FAFC;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: #64748B; font-weight: 500; border-bottom: 1px solid #E5E7EB;
+}
+.admin-table td {
+  padding: 10px 12px; border-bottom: 1px solid #F1F5F9;
+  vertical-align: middle;
+}
+.admin-table tr:hover td { background: #FAFAFA; }
+.admin-table input, .admin-table select {
+  width: 100%; border: 1px solid transparent; background: transparent;
+  padding: 6px 8px; font-family: inherit; font-size: 13px;
+  border-radius: 4px; color: #1E293B;
+}
+.admin-table input:focus, .admin-table select:focus {
+  outline: none; border-color: #6366F1; background: white;
+}
+.toggle-row { display: flex; align-items: center; gap: 6px; }
+.toggle {
+  width: 36px; height: 20px; background: #E5E7EB; border-radius: 10px;
+  position: relative; cursor: pointer; transition: background 0.15s;
+  flex-shrink: 0;
+}
+.toggle::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 16px; height: 16px; background: white; border-radius: 50%;
+  transition: transform 0.15s;
+}
+.toggle.on { background: #15803D; }
+.toggle.on::after { transform: translateX(16px); }
+.toggle-label { font-size: 11px; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; }
+.icon-btn {
+  background: transparent; border: none; cursor: pointer;
+  padding: 4px 6px; color: #94A3B8; font-size: 14px;
+  border-radius: 4px;
+}
+.icon-btn:hover { background: #F1F5F9; color: #0F172A; }
+.icon-btn.danger:hover { background: #FEF2F2; color: #B91C1C; }
+.estado-select {
+  font-size: 11px; padding: 4px 6px;
+  border: 1px solid #E5E7EB; background: white;
+  border-radius: 4px; color: #475569;
+}
+
+.add-form {
+  background: #F8FAFC; border: 1px dashed #CBD5E1;
+  border-radius: 8px; padding: 16px;
+  margin-bottom: 8px;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.add-form .full { grid-column: 1 / -1; }
+.add-form label {
+  font-size: 11px; color: #64748B; text-transform: uppercase;
+  letter-spacing: 0.5px; margin-bottom: 4px; display: block;
+}
+.add-form input, .add-form select {
+  width: 100%; border: 1px solid #E5E7EB; padding: 8px 10px;
+  font-family: inherit; font-size: 13px; border-radius: 6px;
+  background: white;
+}
+.add-form input:focus, .add-form select:focus {
+  outline: none; border-color: #6366F1;
+}
+.add-form .actions { grid-column: 1 / -1; display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+
+/* ---------- Modal ---------- */
+.modal-bg {
+  position: fixed; inset: 0; background: rgba(15,23,42,0.4);
+  display: none; align-items: center; justify-content: center; z-index: 100;
+  padding: 20px;
+}
+.modal-bg.show { display: flex; }
+.modal {
+  background: white; border-radius: 12px; max-width: 480px; width: 100%;
+  padding: 24px; box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+}
+.modal h2 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+.modal p { font-size: 13px; color: #475569; margin-bottom: 12px; line-height: 1.6; }
+.modal input {
+  width: 100%; border: 1px solid #E5E7EB; padding: 10px 12px;
+  font-family: inherit; font-size: 14px; border-radius: 6px;
+  margin-bottom: 10px;
+}
+.modal input:focus { outline: none; border-color: #6366F1; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+
+@media (max-width: 720px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .flow-card {
+    grid-template-columns: 48px 1fr;
+    gap: 12px; padding: 14px;
+  }
+  .flow-card > .flow-num-r,
+  .flow-card > .flow-action { grid-column: 1 / -1; }
+  .flow-card > .flow-num-r { display: flex; justify-content: space-between; align-items: center; padding-left: 60px; }
+  .history-row {
+    grid-template-columns: 40px 1fr 70px 90px;
+    gap: 10px; padding: 10px 14px;
+  }
+  .history-row > .h-val:nth-child(4),
+  .history-row > .h-val:nth-child(5) { display: none; }
+  .hero h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand-bar">
+    <div class="brand">
+      <div class="brand-mark">C</div>
+      <div class="brand-text">
+        <span class="name">Capitalista</span>
+        <span class="tag">infraestructura financiera · capitalista.lat</span>
+      </div>
+    </div>
+    <span class="live-pill">en vivo</span>
+  </div>
+
+  <div class="hero">
+    <h1>Flujos disponibles</h1>
+    <p>operaciones comerciales reales, documentadas paso a paso. inversión a lo latino: rentable, tangible, en plazos cortos. operando desde 2024 con 100% de cumplimiento histórico.</p>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-label">disponibles ahora</div>
+      <div class="kpi-value amber" id="kpi-count">—</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">rentab. disponible</div>
+      <div class="kpi-value green" id="kpi-pct">—</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">plazo promedio</div>
+      <div class="kpi-value" id="kpi-dias">—</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">cumplimiento histórico</div>
+      <div class="kpi-value green" id="kpi-cumple">—</div>
+    </div>
+  </div>
+
+  <div class="section-h">
+    <h2>flujos abiertos a inversión</h2>
+    <span class="count" id="list-count">—</span>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="flow-cat-pill tipo-proc">procesos</span><small>financia un paso del pipeline productivo</small></span>
+    <span class="legend-item"><span class="flow-cat-pill tipo-pers">personalizados</span><small>insumos para producto custom de una línea</small></span>
+    <span class="legend-item"><span class="flow-cat-pill tipo-b2b">b2b</span><small>producto terminado para distribución a empresas</small></span>
+  </div>
+  <div class="list" id="flow-list"></div>
+
+  <div class="evidence">
+    <div class="ev-h">
+      <h3>track record verificable</h3>
+      <span class="ev-tag">73 flujos · 66 cumplidos al 100% · 0 impagos</span>
+    </div>
+    <div class="ev-grid">
+      <div class="ev-item">
+        <div class="ev-num" id="ev-total-flow">73</div>
+        <div class="ev-lbl">flujos operados</div>
+      </div>
+      <div class="ev-item">
+        <div class="ev-num green" id="ev-cumplidos">66</div>
+        <div class="ev-lbl">cumplidos al 100%</div>
+      </div>
+      <div class="ev-item">
+        <div class="ev-num" id="ev-best">62%</div>
+        <div class="ev-lbl">mejor rentabilidad</div>
+      </div>
+      <div class="ev-item">
+        <div class="ev-num" id="ev-fastest">90d</div>
+        <div class="ev-lbl">plazo más rápido</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-h">
+    <h2>track record · flujos cumplidos</h2>
+    <span class="count" id="history-count">—</span>
+  </div>
+  <div class="history-list" id="history-list"></div>
+
+  <div class="cta">
+    <h3>¿te interesa invertir?</h3>
+    <p>dejá tus datos y un asesor de Capitalista te contacta en menos de 24 horas</p>
+    <button onclick="leadModal()">quiero invertir</button>
+  </div>
+
+  <footer class="foot">
+    <span>Capitalista · capitalista.lat · estabilidad como servicio</span>
+    <button class="admin-toggle" onclick="openAdmin()">modo admin</button>
+  </footer>
+
+</div>
+
+<!-- Admin panel -->
+<div class="admin" id="admin">
+  <div class="admin-h">
+    <h2>panel admin · gestión de flujos</h2>
+    <button class="admin-close" onclick="closeAdmin()">×</button>
+  </div>
+  <div class="admin-body">
+
+    <div class="admin-section-title">+ nuevo flujo <small>se publica como visible por defecto</small></div>
+
+    <div class="add-form">
+      <div class="full">
+        <label>descripción interna (lo que ves vos)</label>
+        <input type="text" id="nf-desc-int" placeholder="ej. Visitadora Médica ZN · Mes 4 Skin Biome">
+      </div>
+
+      <div class="full">
+        <label>descripción pública (lo que ven los inversionistas)</label>
+        <input type="text" id="nf-desc-pub" placeholder="ej. Producción shampoo cosmético">
+      </div>
+
+      <div>
+        <label>número oficial</label>
+        <input type="number" id="nf-id" placeholder="ej. 88">
+      </div>
+
+      <div>
+        <label>tipo de flujo</label>
+        <select id="nf-tipo">
+          <option value="procesos">procesos</option>
+          <option value="personalizados">personalizados</option>
+          <option value="b2b">b2b</option>
+        </select>
+      </div>
+
+      <div>
+        <label>inversión (usd)</label>
+        <input type="number" step="0.01" id="nf-inv" placeholder="1141">
+      </div>
+
+      <div>
+        <label>retorno (usd)</label>
+        <input type="number" step="0.01" id="nf-ret" placeholder="479.50">
+      </div>
+
+      <div>
+        <label>plazo (días)</label>
+        <input type="number" id="nf-dias" placeholder="150">
+      </div>
+
+      <div>
+        <label>unidades</label>
+        <input type="text" id="nf-und" placeholder="175 / 175">
+      </div>
+
+      <div class="actions">
+        <button class="btn-ghost" onclick="resetAddForm()">limpiar</button>
+        <button class="btn-primary" onclick="addFlow()">guardar y publicar</button>
+      </div>
+    </div>
+
+    <div class="admin-section-title">tus flujos <small id="admin-count"></small></div>
+
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>visible</th>
+          <th style="width:50px">#</th>
+          <th>descripción pública</th>
+          <th style="width:110px">estado</th>
+          <th style="text-align:right;width:90px">inv usd</th>
+          <th style="text-align:right;width:55px">%</th>
+          <th style="text-align:right;width:55px">d</th>
+          <th style="width:36px"></th>
+        </tr>
+      </thead>
+      <tbody id="admin-tbody"></tbody>
+    </table>
+
+  </div>
+  <div class="admin-actions">
+    <button class="btn-ghost" onclick="resetData()">resetear datos demo</button>
+    <button class="btn-primary" onclick="closeAdmin()">listo</button>
+  </div>
+</div>
+
+<!-- Lead modal -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+const STORAGE_KEY = 'capi_flujos_v3_7_moneda_kpi_fix';
+const SUPABASE_URL = 'https://eecnaxqejfkrbjmvxerv.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_WlFKcKWr3V5Usc0BQ2ngOw_mrVguJOv';
+const LEAD_WEBHOOK_URL = 'https://hook.us2.make.com/j7gt7murswlfv4edmeo39dj5b5polak1';
+
+// 3 tipos de flujos:
+//   procesos       — financia un paso del pipeline productivo (formulación, maquila, terminado)
+//   personalizados — insumos especializados para producto custom de una línea
+//   b2b            — producto terminado para distribución a empresas / clínicas / retail
+//
+// Las descripciones públicas son genéricas (sin nombres de marcas ni productos específicos).
+// La info detallada queda para la versión privada premium en otra fase.
+const seedFlows = [
+  // Disponibles ahora (los 2 reales del Sheet público)
+  { id: 82, descInt: 'Producción cosmética · Mes 4', descPub: 'Producción cosmética · línea capilar', tipo: 'procesos', unidades: '175', inv: 1141, ret: 479.50, dias: 150, estado: 'disponible', visible: true },
+  { id: 87, descInt: 'Insumo activo · filtro UV', descPub: 'Insumo dermatológico · filtro UV', tipo: 'personalizados', unidades: '8 kg', inv: 162, ret: 66, dias: 140, estado: 'disponible', visible: true },
+
+  // Track record · procesos (producción cosmética)
+  { id: 81, descInt: 'Producción cosmética · Mes 1', descPub: 'Producción cosmética · línea facial', tipo: 'procesos', unidades: '188', inv: 1145, ret: 481, dias: 90, estado: 'cobrado', visible: true },
+  { id: 80, descInt: 'Producción cosmética · Mes 2', descPub: 'Producción cosmética · línea despigmentante', tipo: 'procesos', unidades: '224', inv: 1142, ret: 479, dias: 130, estado: 'cobrado', visible: true },
+  { id: 79, descInt: 'Producción cosmética · Mes 3', descPub: 'Producción cosmética · línea limpiadora', tipo: 'procesos', unidades: '202', inv: 1145, ret: 481, dias: 110, estado: 'cobrado', visible: true },
+
+  // Track record · personalizados (insumos custom para una línea específica)
+  { id: 86, descInt: 'Insumo activo · filtro UV avanzado', descPub: 'Insumo dermatológico · filtro UV', tipo: 'personalizados', unidades: '2 kg', inv: 201, ret: 83, dias: 130, estado: 'cobrado', visible: true },
+  { id: 85, descInt: 'Insumo activo · filtro UV', descPub: 'Insumo dermatológico · filtro UV', tipo: 'personalizados', unidades: '2 kg', inv: 209, ret: 86, dias: 120, estado: 'cobrado', visible: true },
+  { id: 84, descInt: 'Insumo activo · filtro UV', descPub: 'Insumo dermatológico · filtro UV', tipo: 'personalizados', unidades: '2 kg', inv: 281, ret: 105, dias: 110, estado: 'cobrado', visible: true },
+  { id: 83, descInt: 'Insumo activo · filtro UV', descPub: 'Insumo dermatológico · filtro UV', tipo: 'personalizados', unidades: '5 kg', inv: 537, ret: 199, dias: 100, estado: 'cobrado', visible: true },
+
+  // Track record · b2b (producto terminado importado para distribución)
+  { id: 62, descInt: 'Línea accesorios moda', descPub: 'Línea accesorios moda', tipo: 'b2b', unidades: '250', inv: 1102.50, ret: 573.30, dias: 140, estado: 'cobrado', visible: true },
+  { id: 33, descInt: 'Envasería cosmética', descPub: 'Envasería para producción cosmética', tipo: 'b2b', unidades: '10,000', inv: 4300, ret: 2400, dias: 150, estado: 'cobrado', visible: true },
+  { id: 31, descInt: 'Línea cuidado del hogar', descPub: 'Línea cuidado del hogar', tipo: 'b2b', unidades: '1,000', inv: 1500, ret: 815, dias: 140, estado: 'cobrado', visible: true },
+  { id: 26, descInt: 'Línea juguetería', descPub: 'Línea juguetería educativa', tipo: 'b2b', unidades: '20', inv: 312, ret: 188, dias: 120, estado: 'cobrado', visible: true },
+  { id: 13, descInt: 'Línea juguetería', descPub: 'Línea juguetería coleccionable', tipo: 'b2b', unidades: '100', inv: 170, ret: 105, dias: 100, estado: 'cobrado', visible: true },
+  { id: 8, descInt: 'Línea decoración floral', descPub: 'Línea decoración floral', tipo: 'b2b', unidades: '48', inv: 464.64, ret: 260.64, dias: 100, estado: 'cobrado', visible: true }
+];
+
+let flows = [];
+let dataSource = 'loading'; // 'supabase' | 'cache' | 'demo'
+
+async function fetchFromSupabase(viewName) {
+  const url = `${SUPABASE_URL}/rest/v1/${viewName}`;
+  const res = await fetch(url, {
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      Accept: 'application/json'
+    }
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return await res.json();
+}
+
+function mapRowFromSupabase(row, estadoFijo) {
+  return {
+    id: row.numero,
+    descInt: row.descripcion,
+    descPub: row.descripcion,
+    tipo: row.tipo_negocio || 'b2b',
+    unidades: row.unidades || '—',
+    inv: parseFloat(row.inversion) || 0,
+    ret: parseFloat(row.retorno) || 0,
+    pct: row.pct_retorno != null ? parseFloat(row.pct_retorno) : null,
+    dias: parseInt(row.dias_plazo) || 100,
+    moneda: (row.moneda || 'usd').toLowerCase(),
+    estado: estadoFijo,
+    visible: true
+  };
+}
+
+async function load() {
+  try {
+    const [disponibles, terminados] = await Promise.all([
+      fetchFromSupabase('vw_flujos_publicos'),
+      fetchFromSupabase('vw_track_record_publico')
+    ]);
+    flows = [
+      ...disponibles.map(r => mapRowFromSupabase(r, 'disponible')),
+      ...terminados.map(r => mapRowFromSupabase(r, 'cobrado'))
+    ];
+    dataSource = 'supabase';
+    save(); // cache para próxima visita offline
+    return;
+  } catch (e) {
+    console.warn('Supabase fetch failed, falling back to cache/demo:', e);
+  }
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) {
+    try {
+      flows = JSON.parse(stored);
+      dataSource = 'cache';
+      return;
+    } catch(e) {}
+  }
+  flows = JSON.parse(JSON.stringify(seedFlows));
+  dataSource = 'demo';
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(flows));
+}
+
+function calcEa(pct, dias) { return Math.round((pct / dias) * 365); }
+function calcPct(inv, ret) { return ((ret / inv) * 100); }
+function getPct(f) {
+  // Usa pct_retorno de la BD si está disponible (más confiable);
+  // fallback a calcPct si no (datos demo o flujos viejos)
+  if (typeof f.pct === 'number' && !isNaN(f.pct) && f.pct > 0) return f.pct;
+  return calcPct(f.inv, f.ret);
+}
+function monedaLabel(m) { return (m || 'usd').toUpperCase(); }
+function fmt(n, moneda) {
+  // Formato grande: "$1.234.567 COP" — usa separadores de miles latinos para COP
+  const m = monedaLabel(moneda);
+  const locale = m === 'COP' ? 'es-CO' : 'en-US';
+  return '$' + Math.round(n).toLocaleString(locale) + ' ' + m;
+}
+function fmtSmall(n, moneda) {
+  // Formato compacto para tarjetas: ajusta sufijo M/k según magnitud
+  const m = monedaLabel(moneda);
+  if (n >= 1000000) return '$' + (Math.round(n/100000)/10).toFixed(1) + 'M ' + m;
+  if (n >= 1000) return '$' + (Math.round(n/100)/10).toFixed(1) + 'k ' + m;
+  return '$' + Math.round(n) + ' ' + m;
+}
+
+const tipoLabels = {
+  procesos: 'procesos',
+  personalizados: 'personalizados',
+  b2b: 'b2b'
+};
+const tipoChipClass = { procesos: 'tipo-proc', personalizados: 'tipo-pers', b2b: 'tipo-b2b' };
+const estadoLabels = { disponible: 'disponible', comprometido: 'comprometido', en_curso: 'en curso', cobrado: 'cobrado', oculto: 'oculto' };
+
+function renderPublic() {
+  const visible = flows.filter(f => f.visible);
+  const disponibles = visible.filter(f => f.estado === 'disponible' || f.estado === 'comprometido' || f.estado === 'en_curso');
+  const cobrados = visible.filter(f => f.estado === 'cobrado');
+
+  const list = document.getElementById('flow-list');
+  if (disponibles.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:#94A3B8;font-size:13px;background:#F8FAFC;border-radius:8px;border:1px dashed #E5E7EB">No hay flujos disponibles en este momento.<br><span style="font-size:11px">Volvé pronto o entrá en modo admin para cargar flujos.</span></div>';
+  } else {
+    list.innerHTML = disponibles.map(f => {
+      const pct = getPct(f);
+      const ea = calcEa(pct, f.dias);
+      const tipoCls = tipoChipClass[f.tipo] || '';
+      return `<div class="flow-card">
+        <div class="flow-num">#${f.id}</div>
+        <div class="flow-info">
+          <div class="name">${f.descPub}</div>
+          <span class="flow-cat-pill ${tipoCls}">${tipoLabels[f.tipo] || f.tipo}</span>
+        </div>
+        <div class="flow-num-r">
+          <div class="label">inversión</div>
+          <div class="value">${fmtSmall(f.inv, f.moneda)}</div>
+        </div>
+        <div class="flow-num-r">
+          <div class="label">retorno</div>
+          <div class="value green">+${fmtSmall(f.ret, f.moneda)}</div>
+        </div>
+        <div class="flow-num-r">
+          <div class="label">rentab.</div>
+          <div class="value green">+${pct.toFixed(0)}%</div>
+        </div>
+        <div class="flow-num-r">
+          <div class="label">${f.dias}d / ea</div>
+          <div class="value amber">+${ea}%</div>
+        </div>
+        <div class="flow-action">
+          <button onclick="interestModal(${f.id})">me interesa</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  const histList = document.getElementById('history-list');
+  if (cobrados.length === 0) {
+    histList.innerHTML = '<div style="text-align:center;padding:24px;color:#94A3B8;font-size:12px">Todavía sin track record visible.</div>';
+  } else {
+    histList.innerHTML = cobrados.map(f => {
+      const pct = getPct(f);
+      return `<div class="history-row">
+        <div class="h-num">#${f.id}</div>
+        <div class="h-name">${f.descPub} <small>· ${tipoLabels[f.tipo] || f.tipo}</small></div>
+        <div class="h-val">${fmtSmall(f.inv, f.moneda)}</div>
+        <div class="h-val green">+${pct.toFixed(0)}%</div>
+        <div class="h-val">${f.dias}d</div>
+        <div><span class="h-badge">cobrado</span></div>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('list-count').textContent = disponibles.length + (disponibles.length === 1 ? ' flujo' : ' flujos');
+  document.getElementById('history-count').textContent = cobrados.length + (cobrados.length === 1 ? ' flujo cumplido' : ' flujos cumplidos');
+  document.getElementById('kpi-count').textContent = disponibles.length;
+  document.getElementById('kpi-cumple').textContent = cobrados.length > 0 ? '100%' : '—';
+
+  if (disponibles.length > 0) {
+    const totalInv = disponibles.reduce((s,f) => s + f.inv, 0);
+    const totalRet = disponibles.reduce((s,f) => s + f.ret, 0);
+    const promPct = totalInv > 0 ? (totalRet / totalInv * 100) : 0;
+    const promDias = disponibles.reduce((s,f) => s + f.dias, 0) / disponibles.length;
+    document.getElementById('kpi-pct').textContent = '+' + promPct.toFixed(1) + '%';
+    document.getElementById('kpi-dias').textContent = Math.round(promDias) + ' días';
+  } else {
+    document.getElementById('kpi-pct').textContent = '—';
+    document.getElementById('kpi-dias').textContent = '—';
+  }
+
+  // Evidence band — datos relevantes del histórico
+  const totalCobrados = cobrados.length;
+  if (totalCobrados > 0) {
+    // Filtra valores absurdos (datos demo con inv/ret incoherentes que dan >999%) y usa pct_retorno de la BD cuando esté disponible
+    const pcts = cobrados.map(f => getPct(f)).filter(p => p > 0 && p <= 200);
+    const bestPct = pcts.length ? Math.max(...pcts) : 0;
+    const fastestDays = Math.min(...cobrados.map(f => f.dias));
+    document.getElementById('ev-cumplidos').textContent = totalCobrados;
+    document.getElementById('ev-best').textContent = bestPct > 0 ? '+' + bestPct.toFixed(0) + '%' : '—';
+    document.getElementById('ev-fastest').textContent = fastestDays + 'd';
+  }
+}
+
+function renderAdmin() {
+  const tbody = document.getElementById('admin-tbody');
+  tbody.innerHTML = flows.map((f, idx) => {
+    const pct = calcPct(f.inv, f.ret);
+    return `<tr>
+      <td>
+        <div class="toggle-row">
+          <div class="toggle ${f.visible ? 'on' : ''}" onclick="toggleVisible(${idx})"></div>
+        </div>
+      </td>
+      <td><input type="number" value="${f.id || ''}" onchange="editFlow(${idx}, 'id', parseInt(this.value))"></td>
+      <td><input type="text" value="${f.descPub}" onchange="editFlow(${idx}, 'descPub', this.value)"></td>
+      <td>
+        <select class="estado-select" onchange="editFlow(${idx}, 'estado', this.value)">
+          <option value="disponible" ${f.estado === 'disponible' ? 'selected' : ''}>disponible</option>
+          <option value="comprometido" ${f.estado === 'comprometido' ? 'selected' : ''}>comprometido</option>
+          <option value="en_curso" ${f.estado === 'en_curso' ? 'selected' : ''}>en curso</option>
+          <option value="cobrado" ${f.estado === 'cobrado' ? 'selected' : ''}>cobrado</option>
+        </select>
+      </td>
+      <td><input type="number" step="0.01" value="${f.inv}" onchange="editFlow(${idx}, 'inv', parseFloat(this.value))" style="text-align:right"></td>
+      <td style="text-align:right;color:#15803D;font-weight:500">+${pct.toFixed(0)}%</td>
+      <td><input type="number" value="${f.dias}" onchange="editFlow(${idx}, 'dias', parseInt(this.value))" style="text-align:right"></td>
+      <td><button class="icon-btn danger" onclick="deleteFlow(${idx})" title="eliminar">×</button></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('admin-count').textContent = '· ' + flows.length + ' total · ' + flows.filter(f => f.visible).length + ' visibles';
+}
+
+function openAdmin() {
+  document.getElementById('admin').classList.add('open');
+  renderAdmin();
+  // Aviso si los datos vienen de Supabase: cambios solo en local cache
+  if (dataSource === 'supabase') {
+    setTimeout(() => {
+      const head = document.querySelector('.admin-h h2');
+      if (head && !head.dataset.warned) {
+        head.dataset.warned = '1';
+        head.innerHTML = 'panel admin <span style="font-size:11px;color:#94A3B8;font-weight:400">· read-only sobre Supabase · cambios solo en este browser</span>';
+      }
+    }, 100);
+  }
+}
+function closeAdmin() { document.getElementById('admin').classList.remove('open'); }
+
+function toggleVisible(idx) { flows[idx].visible = !flows[idx].visible; save(); renderAdmin(); renderPublic(); }
+function editFlow(idx, field, value) { flows[idx][field] = value; save(); renderAdmin(); renderPublic(); }
+function deleteFlow(idx) {
+  if (!confirm('eliminar "' + flows[idx].descPub + '" ?')) return;
+  flows.splice(idx, 1); save(); renderAdmin(); renderPublic();
+}
+
+function addFlow() {
+  const desc = document.getElementById('nf-desc-int').value.trim();
+  const descPub = document.getElementById('nf-desc-pub').value.trim();
+  const id = parseInt(document.getElementById('nf-id').value);
+  const tipo = document.getElementById('nf-tipo').value;
+  const inv = parseFloat(document.getElementById('nf-inv').value);
+  const ret = parseFloat(document.getElementById('nf-ret').value);
+  const dias = parseInt(document.getElementById('nf-dias').value);
+  const und = document.getElementById('nf-und').value.trim();
+
+  if (!descPub || !id || !inv || !ret || !dias) {
+    alert('completá al menos: # · descripción pública · inversión · retorno · plazo');
+    return;
+  }
+  if (flows.some(f => f.id === id)) {
+    if (!confirm('el flujo #' + id + ' ya existe. ¿reemplazarlo?')) return;
+    flows = flows.filter(f => f.id !== id);
+  }
+  flows.unshift({
+    id, descInt: desc || descPub, descPub, tipo,
+    unidades: und || '—', inv, ret, dias,
+    estado: 'disponible', visible: true
+  });
+  save(); resetAddForm(); renderAdmin(); renderPublic();
+}
+
+function resetAddForm() {
+  ['nf-desc-int','nf-desc-pub','nf-id','nf-inv','nf-ret','nf-dias','nf-und'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('nf-tipo').value = 'procesos';
+}
+
+function resetData() {
+  if (!confirm('resetear todos los flujos a los datos iniciales? esto borra los cambios que hiciste.')) return;
+  flows = JSON.parse(JSON.stringify(seedFlows));
+  save(); renderAdmin(); renderPublic();
+}
+
+function showModal(html) {
+  document.getElementById('modal-content').innerHTML = html;
+  document.getElementById('modal-bg').classList.add('show');
+}
+function closeModal() { document.getElementById('modal-bg').classList.remove('show'); }
+document.getElementById('modal-bg').addEventListener('click', e => {
+  if (e.target.id === 'modal-bg') closeModal();
+});
+
+function interestModal(id) {
+  const f = flows.find(x => x.id === id);
+  const pct = getPct(f);
+  const ea = calcEa(pct, f.dias);
+  showModal(`
+    <h2>flujo #${f.id} · ${f.descPub}</h2>
+    <p><strong>inversión:</strong> ${fmt(f.inv, f.moneda)} · <strong>retorno proyectado:</strong> ${fmt(f.ret, f.moneda)}</p>
+    <p><strong>rentabilidad:</strong> +${pct.toFixed(1)}% en ${f.dias} días · <strong>ea:</strong> +${ea}%</p>
+    <p>dejá tus datos y te enviamos el contrato vía ZapSign:</p>
+    <input type="text" placeholder="nombre completo" id="lm-name">
+    <input type="email" placeholder="email" id="lm-email">
+    <input type="tel" placeholder="whatsapp +57" id="lm-wa">
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">cancelar</button>
+      <button class="btn-primary" onclick="confirmLead('${f.id}')">enviar</button>
+    </div>
+  `);
+}
+
+function leadModal() {
+  showModal(`
+    <h2>quiero invertir</h2>
+    <p>dejá tus datos y un asesor de Capitalista te contacta en menos de 24h</p>
+    <input type="text" placeholder="nombre completo" id="lm-name">
+    <input type="email" placeholder="email" id="lm-email">
+    <input type="tel" placeholder="whatsapp +57" id="lm-wa">
+    <input type="text" placeholder="monto que considerás invertir (usd)" id="lm-amount">
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">cancelar</button>
+      <button class="btn-primary" onclick="confirmLead()">enviar</button>
+    </div>
+  `);
+}
+
+async function confirmLead(flowId) {
+  const name = document.getElementById('lm-name').value.trim();
+  const email = (document.getElementById('lm-email') || {}).value || '';
+  const tel = (document.getElementById('lm-wa') || {}).value || '';
+  const amount = (document.getElementById('lm-amount') || {}).value || '';
+
+  if (!name) { alert('al menos pon tu nombre'); return; }
+  if (!tel) { alert('necesitamos tu whatsapp para contactarte'); return; }
+
+  // Botón submit en estado loading
+  const btn = document.querySelector('.modal-actions .btn-primary');
+  const originalLabel = btn ? btn.textContent : null;
+  if (btn) { btn.textContent = 'enviando...'; btn.disabled = true; }
+
+  const payload = {
+    nombre: name,
+    email: email.trim(),
+    telefono: tel.trim(),
+    flujo_interes: flowId ? ('#' + flowId) : '',
+    monto: amount.trim(),
+    origen: 'capitalista_flujos_publico_v3',
+    user_agent: navigator.userAgent.substring(0, 200),
+    fecha_iso: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch(LEAD_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      mode: 'cors'
+    });
+    closeModal();
+    setTimeout(() => alert('listo, ' + name + '!\nMario o un asesor de Capitalista te contacta por WhatsApp en menos de 24h.' + (flowId ? '\n\n(flujo solicitado: #' + flowId + ')' : '')), 100);
+  } catch (e) {
+    console.error('Lead capture failed:', e);
+    if (btn) { btn.textContent = originalLabel; btn.disabled = false; }
+    // Fallback: dejar a la persona el contacto directo de WhatsApp
+    alert('Hubo un problema enviando tus datos. Escribinos directo al WhatsApp +57 319 4307086 mencionando ' + (flowId ? 'el flujo #' + flowId : 'tu interés') + '. Disculpas.');
+  }
+}
+
+(async function init(){
+  await load();
+  renderPublic();
+  // Indicador discreto de origen de datos
+  const livePill = document.querySelector('.live-pill');
+  if (livePill) {
+    if (dataSource === 'supabase') livePill.textContent = 'en vivo';
+    else if (dataSource === 'cache') livePill.textContent = 'cache offline';
+    else livePill.textContent = 'demo';
+  }
+})();
+</script>
+</body>
+</html>
