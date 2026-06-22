@@ -589,11 +589,10 @@ function fmt(n, moneda) {
   return '$' + Math.round(n).toLocaleString(locale) + ' ' + m;
 }
 function fmtSmall(n, moneda) {
-  // Formato compacto para tarjetas: ajusta sufijo M/k según magnitud
+  // Numero COMPLETO con separadores latinos (sin abreviar k/M) para claridad
   const m = monedaLabel(moneda);
-  if (n >= 1000000) return '$' + (Math.round(n/100000)/10).toFixed(1) + 'M ' + m;
-  if (n >= 1000) return '$' + (Math.round(n/100)/10).toFixed(1) + 'k ' + m;
-  return '$' + Math.round(n) + ' ' + m;
+  const locale = m === 'COP' ? 'es-CO' : 'en-US';
+  return '$' + Math.round(n).toLocaleString(locale) + ' ' + m;
 }
 
 const tipoLabels = {
