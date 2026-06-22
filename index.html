@@ -294,7 +294,7 @@ footer.foot {
       <div class="brand-mark">C</div>
       <div class="brand-text">
         <span class="name">Capitalista</span>
-        <span class="tag">infraestructura financiera · capitalista.lat</span>
+        <span class="tag">infraestructura de estabilidad · capitalista.lat</span>
       </div>
     </div>
     <span class="live-pill">en vivo</span>
@@ -302,7 +302,7 @@ footer.foot {
 
   <div class="hero">
     <h1>Flujos disponibles</h1>
-    <p>operaciones comerciales reales, documentadas paso a paso. inversión a lo latino: rentable, tangible, en plazos cortos. operando desde 2024 con 100% de cumplimiento histórico.</p>
+    <p>operaciones comerciales reales, documentadas paso a paso. cada flujo es una compra concreta que se vende y te devuelve tu capital más una ganancia pactada al final del plazo. 100% de cumplimiento histórico, sin un solo retorno incumplido. operando desde 2024.</p>
   </div>
 
   <div class="kpis">
@@ -329,9 +329,9 @@ footer.foot {
     <span class="count" id="list-count">—</span>
   </div>
   <div class="legend">
-    <span class="legend-item"><span class="flow-cat-pill tipo-proc">procesos</span><small>financia un paso del pipeline productivo</small></span>
-    <span class="legend-item"><span class="flow-cat-pill tipo-pers">personalizados</span><small>insumos para producto custom de una línea</small></span>
-    <span class="legend-item"><span class="flow-cat-pill tipo-b2b">b2b</span><small>producto terminado para distribución a empresas</small></span>
+    <span class="legend-item"><span class="flow-cat-pill tipo-proc">procesos</span><small>cubre un paso de la producción de una marca</small></span>
+    <span class="legend-item"><span class="flow-cat-pill tipo-pers">personalizados</span><small>insumos para un producto hecho a la medida</small></span>
+    <span class="legend-item"><span class="flow-cat-pill tipo-b2b">b2b</span><small>producto terminado que se vende a otras empresas</small></span>
   </div>
   <div class="list" id="flow-list"></div>
 
@@ -342,7 +342,7 @@ footer.foot {
     </div>
     <div class="ev-grid">
       <div class="ev-item">
-        <div class="ev-num" id="ev-total-flow">73</div>
+        <div class="ev-num" id="ev-total-flow">108</div>
         <div class="ev-lbl">flujos operados</div>
       </div>
       <div class="ev-item">
@@ -368,12 +368,13 @@ footer.foot {
 
   <div class="cta">
     <h3>¿te interesa invertir?</h3>
-    <p>dejá tus datos y un asesor de Capitalista te contacta en menos de 24 horas</p>
+    <p>deja tus datos y un asesor de Capitalista te contacta en menos de 24 horas</p>
     <button onclick="leadModal()">quiero invertir</button>
   </div>
 
   <footer class="foot">
     <span>Capitalista · capitalista.lat · estabilidad como servicio</span>
+    <small style="display:block;width:100%;margin-top:8px;opacity:.6;font-size:11px;line-height:1.5">contrato privado bilateral con Capitalista. no es entidad vigilada por la Superintendencia Financiera ni cubierta por FOGAFIN. riesgo compartido sobre la ejecución comercial. resultados pasados no garantizan resultados futuros.</small>
     <button class="admin-toggle" onclick="openAdmin()">modo admin</button>
   </footer>
 
@@ -477,9 +478,9 @@ const SUPABASE_ANON_KEY = 'sb_publishable_WlFKcKWr3V5Usc0BQ2ngOw_mrVguJOv';
 const LEAD_WEBHOOK_URL = 'https://hook.us2.make.com/j7gt7murswlfv4edmeo39dj5b5polak1';
 
 // 3 tipos de flujos:
-//   procesos       — financia un paso del pipeline productivo (formulación, maquila, terminado)
-//   personalizados — insumos especializados para producto custom de una línea
-//   b2b            — producto terminado para distribución a empresas / clínicas / retail
+//   procesos       — cubre un paso de la producción de una marca (formulación, maquila, terminado)
+//   personalizados — insumos especializados para un producto hecho a la medida
+//   b2b            — producto terminado que se vende a otras empresas / clínicas / retail
 //
 // Las descripciones públicas son genéricas (sin nombres de marcas ni productos específicos).
 // La info detallada queda para la versión privada premium en otra fase.
@@ -800,7 +801,7 @@ function interestModal(id) {
     <h2>flujo #${f.id} · ${f.descPub}</h2>
     <p><strong>inversión:</strong> ${fmt(f.inv, f.moneda)} · <strong>retorno proyectado:</strong> ${fmt(f.ret, f.moneda)}</p>
     <p><strong>rentabilidad:</strong> +${pct.toFixed(1)}% en ${f.dias} días · <strong>ea:</strong> +${ea}%</p>
-    <p>dejá tus datos y te enviamos el contrato vía ZapSign:</p>
+    <p>deja tus datos y te enviamos el contrato vía ZapSign:</p>
     <input type="text" placeholder="nombre completo" id="lm-name">
     <input type="email" placeholder="email" id="lm-email">
     <input type="tel" placeholder="whatsapp +57" id="lm-wa">
@@ -814,7 +815,7 @@ function interestModal(id) {
 function leadModal() {
   showModal(`
     <h2>quiero invertir</h2>
-    <p>dejá tus datos y un asesor de Capitalista te contacta en menos de 24h</p>
+    <p>deja tus datos y un asesor de Capitalista te contacta en menos de 24h</p>
     <input type="text" placeholder="nombre completo" id="lm-name">
     <input type="email" placeholder="email" id="lm-email">
     <input type="tel" placeholder="whatsapp +57" id="lm-wa">
