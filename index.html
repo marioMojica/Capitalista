@@ -555,7 +555,7 @@ async function load() {
     ];
     dataSource = 'supabase';
     try {
-      const enCurso = await fetchFromSupabase('vw_flujos_en_curso?select=numero');
+      const enCurso = await fetchFromSupabase('vw_flujos_en_curso_publico');
       enCursoCount = Array.isArray(enCurso) ? enCurso.length : 0;
     } catch (_) { enCursoCount = 0; }
     save(); // cache para próxima visita offline
