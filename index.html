@@ -342,7 +342,7 @@ footer.foot {
     </div>
     <div class="ev-grid">
       <div class="ev-item">
-        <div class="ev-num" id="ev-total-flow">108</div>
+        <div class="ev-num" id="ev-total-flow">112</div>
         <div class="ev-lbl">flujos operados</div>
       </div>
       <div class="ev-item">
@@ -510,6 +510,7 @@ const seedFlows = [
 ];
 
 let flows = [];
+let enCursoCount = 0; // flujos en curso (para "flujos operados" en vivo)
 let dataSource = 'loading'; // 'supabase' | 'cache' | 'demo'
 
 async function fetchFromSupabase(viewName) {
@@ -553,6 +554,10 @@ async function load() {
       ...terminados.map(r => mapRowFromSupabase(r, 'cobrado'))
     ];
     dataSource = 'supabase';
+    try {
+      const enCurso = await fetchFromSupabase('vw_flujos_en_curso?select=numero');
+      enCursoCount = Array.isArray(enCurso) ? enCurso.length : 0;
+    } catch (_) { enCursoCount = 0; }
     save(); // cache para próxima visita offline
     return;
   } catch (e) {
@@ -691,6 +696,10 @@ function renderPublic() {
     document.getElementById('ev-best').textContent = bestPct > 0 ? '+' + bestPct.toFixed(0) + '%' : '—';
     document.getElementById('ev-fastest').textContent = fastestDays + 'd';
   }
+
+  // Flujos operados = todo el pipeline real (cumplidos + en curso + disponibles), en vivo
+  const evTotal = document.getElementById('ev-total-flow');
+  if (evTotal) evTotal.textContent = cobrados.length + disponibles.length + enCursoCount;
 }
 
 function renderAdmin() {
