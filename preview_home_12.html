@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="es">
+<head>
+<base href="https://capitalista.lat/">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Capitalista | Software financiero para una vida estable.</title>
+<meta name="description" content="Infraestructura de estabilidad para la economía informal, financiada por comercio real. Estabilidad inmediata (DRR) y continua (MRR) sobre los 5 indicadores del IPM." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg-base:#020C16;
+  --bg-deep:#020C16;
+  --fg:#ffffff;
+  --fg-mute:#a8a8a8;
+  --fg-dim:#6f6f6f;
+  --hairline:rgba(255,255,255,.08);
+  --hairline-strong:rgba(255,255,255,.18);
+  --font-display:'Roboto',Arial,Helvetica,sans-serif;
+  --font-body:'Roboto',Arial,Helvetica,sans-serif;
+  --max-w:1200px;
+  --content-w:880px;
+  --pad-x:clamp(20px,5vw,48px);
+  --pad-y:clamp(64px,12vh,140px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg-base);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%;height:auto}
+
+h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:-.01em}
+h1{font-size:clamp(38px,6vw,56px);line-height:1.1}
+h2{font-size:clamp(26px,3.5vw,40px);line-height:1.2}
+h3{font-size:clamp(20px,2.6vw,28px);line-height:1.25;font-weight:500}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-dim);font-weight:500}
+.lead{font-size:clamp(17px,2vw,21px);line-height:1.5;color:var(--fg-mute);max-width:640px}
+.muted{color:var(--fg-mute)}
+.dim{color:var(--fg-dim)}
+
+section{padding:var(--pad-y) var(--pad-x);position:relative}
+.wrap{max-width:var(--max-w);margin:0 auto}
+.content{max-width:var(--content-w);margin:0 auto}
+.center{text-align:center}
+
+/* nav */
+.nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:24px var(--pad-x)}
+.brand{font-family:var(--font-display);font-weight:500;font-size:20px;letter-spacing:-.01em;color:#fff}
+.nav-links{display:none;gap:32px;color:#ffffff;font-size:14px}
+.nav-links a:hover{color:#fff}
+@media(min-width:900px){.nav-links{display:flex}}
+.btn{display:inline-block;padding:10px 18px;border:1px solid #ffffff;border-radius:6px;font-size:14px;font-weight:500;color:#fff;background:transparent;transition:.18s ease}
+.btn:hover{background:transparent;color:var(--fg-mute);border-color:var(--fg-mute)}
+.btn-primary{background:transparent;color:#fff;border:1px solid #ffffff}
+.btn-primary:hover{background:transparent;color:var(--fg-mute);border-color:var(--fg-mute)}
+
+/* 02 HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 var(--pad-x);position:relative;overflow:hidden;background:var(--bg-deep)}
+.hero-bg{position:absolute;inset:0;background-image:url('earth-background.jpg');background-size:cover;background-position:center;z-index:0}
+.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:280px;background:linear-gradient(to bottom,rgba(2,12,22,0),var(--bg-base));z-index:1;pointer-events:none}
+.hero-content{position:relative;z-index:5;text-align:center;max-width:980px;margin:0 auto}
+.hero h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.3)}
+.hero-sub{margin-top:8px;font-size:clamp(16px,2vw,22px);color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(0,0,0,.3)}
+
+/* 03 — 5 IPM */
+.ipm{background:var(--bg-base);padding-bottom:clamp(40px,6vh,72px)}
+.ipm-intro{max-width:720px;margin:0 auto 56px;text-align:center;color:var(--fg-mute);font-size:clamp(16px,1.8vw,19px);line-height:1.55}
+.ipm-row{display:grid;grid-template-columns:repeat(2,1fr);gap:64px 16px;max-width:var(--max-w);margin:0 auto 120px}
+@media(min-width:900px){.ipm-row{grid-template-columns:repeat(5,1fr);gap:32px}}
+.ipm-item{text-align:center;color:var(--fg-mute);font-size:14px;line-height:1.45}
+.ipm-item img{width:88px;height:88px;margin:0 auto 24px;object-fit:contain;image-rendering:-webkit-optimize-contrast;image-rendering:auto}
+.ipm-item strong{display:block;color:#fff;font-weight:400;font-size:15px;line-height:1.4}
+.ipm-headline{max-width:980px;margin:0 auto 56px;text-align:center}
+.ipm-headline h2{color:#fff}
+
+/* 04 — Conectores (DRR / WRR / MRR) */
+.duo{background:var(--bg-deep);padding-top:clamp(40px,6vh,72px)}
+.duo h2{text-align:center;max-width:880px;margin:0 auto 24px}
+.duo .lead{text-align:center;margin:0 auto 80px}
+.duo-grid{display:grid;grid-template-columns:1fr;gap:64px;max-width:var(--max-w);margin:0 auto}
+@media(min-width:900px){.duo-grid{grid-template-columns:repeat(3,1fr);gap:48px}}
+.duo-col{padding:0}
+.duo-col h3{font-size:clamp(22px,2.4vw,26px);font-weight:700;margin-bottom:4px;color:#fff;line-height:1.2}
+.duo-col .sigla{display:block;font-family:var(--font-display);font-weight:500;font-size:14px;color:#fff;letter-spacing:.16em;margin-bottom:14px;margin-top:4px}
+.duo-col .sigla-long{display:block;font-size:13px;color:var(--fg-dim);margin-bottom:28px}
+.duo-col p.hook{color:#fff;font-size:clamp(17px,1.9vw,20px);line-height:1.4;font-weight:500;margin-bottom:18px;max-width:380px}
+.duo-col p.body{color:var(--fg-mute);font-size:15px;line-height:1.6;max-width:380px;margin-bottom:14px}
+.duo-col p.close{color:#fff;font-size:15px;line-height:1.55;max-width:380px;font-weight:400}
+.duo-bridge{max-width:720px;margin:96px auto 0;padding-top:48px;border-top:1px solid var(--hairline);text-align:center}
+.duo-bridge p{color:var(--fg-mute);font-size:clamp(16px,1.8vw,19px);line-height:1.6}
+.duo-close{max-width:680px;margin:48px auto 0;text-align:center}
+.duo-close p{color:#fff;font-size:clamp(18px,2.2vw,22px);font-weight:500;line-height:1.45}
+
+/* 05 — Estabilidad como servicio */
+.eaas{background:var(--bg-base)}
+.eaas-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:center;max-width:var(--max-w);margin:0 auto}
+@media(min-width:900px){.eaas-grid{grid-template-columns:1fr 1fr;gap:80px}}
+.eaas-text .eyebrow{margin-bottom:18px}
+.eaas-text h2{margin-bottom:24px}
+.eaas-text .lead{margin-bottom:32px;max-width:480px}
+.eaas-list{display:grid;gap:18px;color:var(--fg-mute);font-size:clamp(15px,1.6vw,18px);max-width:460px}
+.eaas-list span{display:block;color:#fff;font-weight:500}
+.eaas-list em{color:var(--fg-dim);font-style:normal;font-size:14px}
+.eaas-img{display:flex;justify-content:center;align-items:center}
+.eaas-img img{max-width:340px;width:80%;filter:drop-shadow(0 24px 48px rgba(0,0,0,.45))}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:start}
+.cat{text-align:center}
+.cat img{width:100%;max-width:116px;height:auto;object-fit:contain;margin:0 auto 16px}
+.cat h3{color:#fff;font-weight:500;font-size:17px;line-height:1.3;margin-bottom:6px}
+.cat p{color:var(--fg-mute);font-size:14px;line-height:1.5;max-width:220px;margin:0 auto}
+.modelos-cta{margin-top:36px;text-align:center}
+.modelos-cta a{display:inline-block;font-size:15px;color:#fff;border-bottom:1px solid var(--hairline-strong);padding-bottom:3px}
+.modelos-cta a:hover{border-bottom-color:#fff}
+.conn-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:var(--max-w);margin:0 auto}
+@media(min-width:760px){.conn-grid{grid-template-columns:repeat(3,1fr)}}
+.conn{border:1px solid var(--hairline);border-radius:10px;padding:32px 28px}
+.conn h3{color:#fff;font-weight:700;font-size:clamp(22px,2.6vw,26px);margin-bottom:4px}
+.conn .sub{display:block;color:var(--fg-dim);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+.conn p{color:var(--fg-mute);font-size:15px;line-height:1.6}
+.conn a{display:inline-block;margin-top:20px;font-size:14px;color:#fff;border-bottom:1px solid var(--hairline-strong);padding-bottom:2px}
+.conn a:hover{border-bottom-color:#fff}
+.duo-frame{max-width:var(--max-w);margin:0 auto;border:1px solid rgba(255,255,255,.45);border-radius:16px;padding:clamp(36px,5vw,64px)}
+
+/* 06 — Modelos */
+.models{background:var(--bg-deep)}
+.models h2{text-align:center;margin-bottom:18px}
+.models .lead{text-align:center;margin:0 auto 64px}
+.models-grid{display:grid;grid-template-columns:1fr;gap:48px;max-width:var(--max-w);margin:0 auto}
+@media(min-width:760px){.models-grid{grid-template-columns:repeat(3,1fr);gap:32px}}
+.model{padding:0;text-align:left}
+.model .eyebrow{margin-bottom:10px}
+.model h3{margin-bottom:18px;color:#fff;font-weight:700;font-size:clamp(22px,2.6vw,28px)}
+.model dl{display:grid;gap:10px;color:var(--fg-mute);font-size:14px;line-height:1.6}
+.model dt{color:var(--fg-dim);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-top:8px}
+.model dd{color:var(--fg);font-size:15px}
+.model-cta{display:inline-block;margin-top:28px;font-size:14px;color:#fff;border-bottom:1px solid var(--hairline-strong);padding-bottom:2px}
+.model-cta:hover{border-bottom-color:#fff}
+
+/* 07 — Distribución utilidad */
+.distrib{background:var(--bg-base)}
+.distrib .eyebrow{display:block;text-align:center;margin-bottom:18px}
+.distrib h2{margin-bottom:24px;text-align:center;max-width:780px;margin-left:auto;margin-right:auto}
+.distrib .lead{text-align:center;margin:0 auto 56px}
+.bridge{max-width:920px;margin:0 auto}
+.bridge svg{width:100%;height:auto;display:block}
+.bridge-foot{margin-top:48px;text-align:center;color:var(--fg-mute);font-size:15px;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+/* 08 — Cómo iniciar */
+.howto{background:var(--bg-deep)}
+.howto h2{margin-bottom:64px;text-align:center}
+.howto .eyebrow{display:block;text-align:center;margin-bottom:18px}
+.steps{display:grid;gap:48px;max-width:760px;margin:0 auto}
+.step{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start}
+.step-num{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4vw,40px);color:var(--fg-dim);min-width:60px}
+.step-body h3{margin-bottom:6px;color:#fff}
+.step-body p{color:var(--fg-mute);font-size:clamp(15px,1.6vw,17px);line-height:1.6;max-width:520px}
+
+/* 09 — Flujos en vivo + trust */
+.flujos{background:var(--bg-base)}
+.flujos h2{text-align:center;margin-bottom:18px}
+.flujos .lead{text-align:center;margin:0 auto 48px}
+.flujos .eyebrow{display:block;text-align:center;margin-bottom:18px}
+.trust-cab{max-width:var(--content-w);margin:0 auto 64px;text-align:center}
+.trust-cab p{font-size:clamp(15px,1.6vw,18px);color:var(--fg);line-height:1.7}
+.trust-cab strong{font-weight:700;color:#fff}
+.trust-cab small{display:block;margin-top:10px;color:var(--fg-dim);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:var(--content-w);margin:0 auto 56px;padding:32px 0;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+@media(min-width:680px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{text-align:center}
+.stat-num{display:block;font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4vw,38px);color:#fff;line-height:1.1}
+.stat-lbl{display:block;margin-top:6px;font-size:12px;color:var(--fg-dim);text-transform:uppercase;letter-spacing:.1em}
+.tbl-wrap{max-width:var(--max-w);margin:0 auto;overflow-x:auto;border-top:1px solid var(--hairline)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{font-weight:500;text-align:left;padding:14px 12px;color:var(--fg-dim);text-transform:uppercase;font-size:11px;letter-spacing:.12em;border-bottom:1px solid var(--hairline)}
+.tbl td{padding:14px 12px;border-bottom:1px solid var(--hairline);color:var(--fg-mute);font-variant-numeric:tabular-nums}
+.tbl tr:hover td{color:#fff;background:rgba(255,255,255,.02)}
+.flujo-row{cursor:pointer}
+.tbl .num{text-align:right;color:#fff}
+.estado{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.estado.disponible{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+.estado.terminado{background:rgba(160,160,160,.1);color:var(--fg-mute);border:1px solid var(--hairline-strong)}
+.estado.sin_acuerdo{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+.flujos-foot{margin-top:32px;text-align:center;font-size:13px;color:var(--fg-dim)}
+.tbl-empty{padding:48px;text-align:center;color:var(--fg-dim);font-size:14px}
+
+/* 10 — Doors + footer */
+.doors{background:var(--bg-deep)}
+.doors h2{text-align:center;margin-bottom:64px}
+.doors-grid{display:grid;grid-template-columns:1fr;gap:48px;max-width:var(--max-w);margin:0 auto 96px}
+@media(min-width:760px){.doors-grid{grid-template-columns:repeat(3,1fr);gap:48px}}
+.door{padding:0;text-align:left}
+.door .eyebrow{margin-bottom:10px}
+.door h3{margin-bottom:14px;color:#fff;font-weight:700;font-size:clamp(22px,2.6vw,28px)}
+.door p{color:var(--fg-mute);font-size:15px;line-height:1.55;margin-bottom:24px}
+.door-cta{font-size:14px;color:#fff;border-bottom:1px solid var(--hairline-strong);padding-bottom:2px}
+.door-cta:hover{border-bottom-color:#fff}
+
+footer{background:var(--bg-base);padding:48px var(--pad-x) 32px;border-top:1px solid var(--hairline)}
+.foot-grid{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:1fr;gap:32px}
+@media(min-width:680px){.foot-grid{grid-template-columns:repeat(3,1fr);gap:48px}}
+.foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--fg-dim);margin-bottom:14px;font-weight:500}
+.foot-col ul{list-style:none}
+.foot-col li{padding:6px 0;font-size:14px;color:var(--fg-mute)}
+.foot-col a:hover{color:#fff}
+.foot-bottom{max-width:var(--max-w);margin:48px auto 0;padding-top:24px;border-top:1px solid var(--hairline);font-size:12px;color:var(--fg-dim);line-height:1.7}
+.foot-bottom p{margin-bottom:10px}
+.disclaimer{margin-top:14px;font-size:11px;color:var(--fg-dim);max-width:760px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<!-- ============ 02. HERO (intacto del live) ============ -->
+<section class="hero">
+  <div class="hero-bg" role="presentation"></div>
+  <nav class="nav">
+    <div class="brand">Capitalista</div>
+    <div class="nav-links">
+      <a href="https://api.capitalista.lat">La API</a>
+      <a href="https://modelos.capitalista.lat">Modelos de estabilidad</a>
+      <a href="https://flujos.capitalista.lat">Flujos</a>
+      <a href="https://capiland.capitalista.lat">Capiland</a>
+    </div>
+    <a class="btn btn-primary" href="https://capiland.capitalista.lat">Conoce Capiland</a>
+  </nav>
+  <div class="hero-content">
+    <h1>La API para una vida estable.</h1>
+    <p class="hero-sub">Construida sobre la economía informal, con comercio real.</p>
+  </div>
+</section>
+<section id="flujos" class="flujos">
+  <p class="eyebrow">Capiland</p>
+  <h2>Invierte en la economía productiva, con respaldo verificable.</h2>
+  <p class="lead">Capiland es nuestro mercado de flujos, donde invertir deja de ser para unos pocos: si sabes sumar y restar, lo entiendes. Una alternativa transparente frente al mercado tradicional, respaldada por producto físico que se vende día a día.</p>
+  <div class="stats">
+    <div class="stat"><span class="stat-num" id="s-cumplidos">&mdash;</span><span class="stat-lbl">Ciclos cumplidos</span></div>
+    <div class="stat"><span class="stat-num" id="s-cumple">&mdash;</span><span class="stat-lbl">Cumplimiento</span></div>
+    <div class="stat"><span class="stat-num" id="s-rent">&mdash;</span><span class="stat-lbl">Rentabilidad prom.</span></div>
+    <div class="stat"><span class="stat-num" id="s-disp">&mdash;</span><span class="stat-lbl">Disponibles ahora</span></div>
+  </div>
+  <div class="tbl-wrap">
+    <table class="tbl" id="tbl-flujos">
+      <thead>
+        <tr>
+          <th>Flujo #</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th class="num">Inv (COP)</th>
+          <th class="num">Ret (COP)</th>
+          <th class="num">% Rent</th>
+          <th class="num">Días</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody><tr><td colspan="8" class="tbl-empty">Cargando datos en vivo&hellip;</td></tr></tbody>
+    </table>
+  </div>
+  <p class="flujos-foot">Cifras en COP equivalente con TRM Superfinanciera del día.</p>
+</section>
+<section id="nosotros" class="doors">
+  <div class="content center">
+    <p class="eyebrow center" style="margin-bottom:18px">El motor</p>
+    <h2 style="margin:0 auto 28px">Estabilidad construida sobre un negocio real.</h2>
+    <p class="lead" style="margin:0 auto">Estabilidad que se financia sola. Sin crédito, sin donación.</p>
+  </div>
+</section>
+<section class="eaas">
+  <div class="eaas-grid">
+    <div class="eaas-text">
+      <p class="eyebrow">Los modelos</p>
+      <h2>Cada modelo se apoya en evidencia, no en intuición.</h2>
+      <p class="lead">Tomamos lo que la ciencia ya demostró que estabiliza un hogar, lo financiamos con nuestro propio comercio y lo aplicamos.</p>
+    </div>
+    <div class="eaas-right">
+    <div class="cat-grid">
+      <div class="cat">
+        <img src="assets/modelos/modelo-1.png" alt="Modelos esenciales" loading="lazy"/>
+        <h3>Esenciales</h3>
+        <p>Sostienen el día a día.</p>
+      </div>
+      <div class="cat">
+        <img src="assets/modelos/modelo-2.png" alt="Modelos de progreso" loading="lazy"/>
+        <h3>Progreso</h3>
+        <p>Hacen avanzar a la familia.</p>
+      </div>
+      <div class="cat">
+        <img src="assets/modelos/modelo-3.png" alt="Modelos de contingencia" loading="lazy"/>
+        <h3>Contingencia</h3>
+        <p>Cubren lo imprevisto.</p>
+      </div>
+    </div>
+    <div class="modelos-cta">
+      <a href="https://modelos.capitalista.lat">Explora todos los modelos &rarr;</a>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="duo">
+  <div class="duo-frame">
+  <p class="eyebrow center" style="margin-bottom:18px">Los conectores</p>
+  <h2>Conectores para mejorar la vida, un día a la vez.</h2>
+  <p class="lead">Cada conector aplica tecnología y matemáticas a la necesidad real de cada persona: activa los modelos y flujos justos y, con cada dato que aprende, afina cómo estabilizar su día a día.</p>
+  <div class="conn-grid">
+    <div class="conn">
+      <h3>La niñez</h3>
+      <span class="sub">Doraemon</span>
+      <p>Calcula lo que un infante necesita en cada etapa y ordena los recursos para sostenerlo, día a día.</p>
+      <a href="https://conectores.capitalista.lat/doraemon">Ver detalle &rarr;</a>
+    </div>
+    <div class="conn">
+      <h3>Madres cabeza de familia</h3>
+      <span class="sub">Androide #18</span>
+      <p>Optimiza los recursos de una madre según lo que necesita, para que primero se sostenga ella; con ella firme, su familia avanza.</p>
+      <a href="https://conectores.capitalista.lat/androide-18">Ver detalle &rarr;</a>
+    </div>
+    <div class="conn">
+      <h3>Creativos y soñadores</h3>
+      <span class="sub">Atreyu</span>
+      <p>Le da alas a un creativo para soñar en grande sin que el dinero sea el freno.</p>
+      <a href="https://conectores.capitalista.lat/atreyu">Ver detalle &rarr;</a>
+    </div>
+  </div>
+  <div class="modelos-cta">
+    <a href="https://conectores.capitalista.lat">Explorar más conectores &rarr;</a>
+  </div>
+  </div>
+</section>
+<section id="ipm" class="ipm">
+  <div class="ipm-headline">
+    <h2>Medir la pobreza no la reduce. Nuestros modelos sí.</h2>
+  </div>
+  <div class="ipm-row">
+    <div class="ipm-item">
+      <img src="assets/ipm/ipm-1.png" alt="Condiciones educativas del hogar" loading="lazy"/>
+      <strong>Condiciones educativas<br>del hogar</strong>
+    </div>
+    <div class="ipm-item">
+      <img src="assets/ipm/ipm-3.png" alt="Trabajo" loading="lazy"/>
+      <strong>Trabajo</strong>
+    </div>
+    <div class="ipm-item">
+      <img src="assets/ipm/ipm-2.png" alt="Condiciones de la niñez y la juventud" loading="lazy"/>
+      <strong>Condiciones de la<br>niñez y la juventud</strong>
+    </div>
+    <div class="ipm-item">
+      <img src="assets/ipm/ipm-4.png" alt="Salud" loading="lazy"/>
+      <strong>Salud</strong>
+    </div>
+    <div class="ipm-item">
+      <img src="assets/ipm/ipm-5.png" alt="Servicios públicos y vivienda" loading="lazy"/>
+      <strong>Servicios públicos<br>y vivienda</strong>
+    </div>
+  </div>
+  <p class="ipm-intro">La pobreza no es solo falta de dinero. Tiene cinco caras —educación, niñez, trabajo, salud, vivienda— y construimos un modelo de estabilidad para mejorar cada una de manera sostenida en el tiempo.</p>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-col">
+      <h4>Explora</h4>
+      <ul>
+        <li><a href="https://api.capitalista.lat">La API</a></li>
+        <li><a href="https://modelos.capitalista.lat">Modelos de estabilidad</a></li>
+        <li><a href="https://conectores.capitalista.lat">Conectores</a></li>
+        <li><a href="https://flujos.capitalista.lat">Flujos</a></li>
+        <li><a href="https://capiland.capitalista.lat">Capiland</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Capitalista</h4>
+      <ul>
+        <li><a href="#nosotros">Quiénes somos</a></li>
+        <li><a href="#">Preguntas frecuentes</a></li>
+        <li><a href="https://wa.me/573187210829">WhatsApp +57 318 721 0829</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Legal y transparencia</h4>
+      <ul>
+        <li><a href="#">Política de privacidad</a></li>
+        <li><a href="#">Términos y condiciones</a></li>
+        <li><a href="#">Riesgos financieros</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>&copy; 2026 Capitalista. Todos los derechos reservados.</p>
+    <p>Operado por Salderma SAS &middot; NIT 901.802.503-3 &middot; Bucaramanga, Colombia.</p>
+    <p class="disclaimer">
+      Capitalista no ofrece créditos ni capta dinero del público en términos del Decreto 1981 de 1988 ni de la Ley 964 de 2005. Las personas que aportan capital lo hacen mediante contratos específicos de participación en operaciones comerciales reales. Los retornos son estimados con base en operaciones cumplidas históricamente y pueden variar.
+    </p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const SUPA_URL = 'https://eecnaxqejfkrbjmvxerv.supabase.co';
+  const SUPA_KEY = 'sb_publishable_WlFKcKWr3V5Usc0BQ2ngOw_mrVguJOv';
+  const fmt = n => n == null ? '—' : new Intl.NumberFormat('es-CO').format(Math.round(n));
+  const fmtPct = n => n == null ? '—' : (Number(n).toFixed(1).replace(/\.0$/,'')) + '%';
+
+  async function loadEvidence(){
+    try{
+      const r = await fetch(SUPA_URL + '/rest/v1/vw_evidence_publica', {
+        headers: {apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY}
+      });
+      const d = (await r.json())[0] || {};
+      const closed = (d.cumplidos || 0) + (d.no_completados || 0);
+      const pctCumple = closed > 0 ? (100 * d.cumplidos / closed) : null;
+      document.getElementById('s-cumplidos').textContent = fmt(d.cumplidos);
+      document.getElementById('s-cumple').textContent = fmtPct(pctCumple);
+      document.getElementById('s-rent').textContent = fmtPct(d.pct_promedio_historico);
+      document.getElementById('s-disp').textContent = fmt(d.disponibles);
+    } catch(e) { console.warn('evidence load failed', e); }
+  }
+
+  async function loadFlujos(){
+    const tbody = document.querySelector('#tbl-flujos tbody');
+    try{
+      const rDisp = await fetch(SUPA_URL + '/rest/v1/vw_flujos_publicos?order=numero.desc', {
+        headers: {apikey: SUPA_KEY, Authorization: 'Bearer ' + SUPA_KEY}
+      });
+      const disp = await rDisp.json();
+      const all = (Array.isArray(disp) ? disp.map(x => ({...x, estado: 'disponible'})) : []);
+      all.sort((a,b) => (b.numero||0) - (a.numero||0));
+      if (!all.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="tbl-empty">Sin datos disponibles en este momento.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = all.slice(0, 30).map(f => {
+        const moneda = (f.moneda || 'cop').toLowerCase();
+        const factor = moneda === 'usd' ? 3747 : 1;
+        const inv = f.inversion != null ? f.inversion * factor : null;
+        const ret = f.retorno != null ? f.retorno * factor : null;
+        const desc = f.descripcion || f.descripcion_publica || '—';
+        const tipo = (f.tipo_negocio || '—').replace(/_/g,' ');
+        const pct = f.pct_retorno != null ? f.pct_retorno : (inv && ret ? (100*(ret-inv)/inv) : null);
+        const plz = f.dias_plazo || '—';
+        const est = f.estado || 'terminado';
+        return `<tr class="flujo-row" onclick="location.href='https://capiland.capitalista.lat/?flujo=${f.numero}'">
+          <td><strong>${f.numero || '—'}</strong></td>
+          <td>${desc}</td>
+          <td class="muted">${tipo}</td>
+          <td class="num">${fmt(inv)}</td>
+          <td class="num">${fmt(ret)}</td>
+          <td class="num">${pct != null ? fmtPct(pct) : '—'}</td>
+          <td class="num">${plz}</td>
+          <td><span class="estado ${est}">${est.replace('_',' ')}</span></td>
+        </tr>`;
+      }).join('');
+    } catch(e) {
+      console.warn('flujos load failed', e);
+      tbody.innerHTML = '<tr><td colspan="8" class="tbl-empty">No se pudieron cargar los flujos. Reintentar en unos segundos.</td></tr>';
+    }
+  }
+
+  loadEvidence();
+  loadFlujos();
+})();
+</script>
+
+</body>
+</html>
