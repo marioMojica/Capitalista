@@ -49,16 +49,36 @@ li.quiz{color:var(--muted);font-size:13.5px}
 li mark{background:var(--accent-soft);color:inherit;border-radius:3px}
 .empty{color:var(--muted);text-align:center;padding:24px 0}
 @media (prefers-reduced-motion: reduce){.arrow{transition:none}}
+.keyo{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.keyo h2{font-family:var(--display);font-size:19px;margin:0}
+.keyo p{margin:0;color:var(--muted)}
+.bar{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--chip);gap:2px}
+.bar i{display:block}
+.leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted)}
+.leg b{color:var(--fg);font-variant-numeric:tabular-nums}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.pasos{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.pasos li{display:grid;grid-template-columns:auto 1fr;gap:10px;border-bottom:1px dashed var(--line);padding:8px 0}
+.pasos .ev{font-size:13px;color:var(--muted)}
+.pasos .de{font-size:12px;color:var(--muted)}
+.est{font-size:11px;font-weight:600;border-radius:6px;padding:1px 7px;white-space:nowrap;align-self:start;margin-top:2px}
+.e-hecho{background:#dff1e4;color:#1f6b36}.e-en_curso{background:#fdf0cf;color:#7a5600}.e-falta{background:#fbe0dc;color:#9b2a1c}.e-por_verificar{background:#e3ebf7;color:#2d4f86}.e-en_espera{background:var(--chip);color:var(--muted)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .e-hecho{background:#1d3324;color:#8fd3a3}:root:not([data-theme="light"]) .e-en_curso{background:#3a2f12;color:#f0c96a}:root:not([data-theme="light"]) .e-falta{background:#3d1d18;color:#f2a093}:root:not([data-theme="light"]) .e-por_verificar{background:#1c2a40;color:#9dbbe8}}
+:root[data-theme="dark"] .e-hecho{background:#1d3324;color:#8fd3a3}:root[data-theme="dark"] .e-en_curso{background:#3a2f12;color:#f0c96a}:root[data-theme="dark"] .e-falta{background:#3d1d18;color:#f2a093}:root[data-theme="dark"] .e-por_verificar{background:#1c2a40;color:#9dbbe8}
+li .ks{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.toggle{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--muted);margin-top:8px}
+.keyo details{border:0;background:none}.keyo summary{padding:0;color:var(--accent);font-weight:600;font-size:14px}
 </style>
 
 </head><body>
 <div class="wrap">
   <header>
     <h1>Temario Dropi Academy</h1>
-    <p class="sub">Los 21 cursos de la Academia con sus lecciones, en el orden de la plataforma. Se lee en vivo de la base de Capitalista: si se agrega o cambia algo, aquí aparece al recargar.</p>
+    <p class="sub">Los 21 cursos de la Academia con sus lecciones, en el orden de la plataforma. Se lee en vivo de la base de Capitalista: si se agrega o cambia algo, o avanza un paso de Keyo, aquí aparece al recargar.</p>
     <div class="stats" id="stats"></div>
   </header>
-  <div class="search"><input id="q" type="search" placeholder="Buscar un tema: garantías, guías, Meta, novedades…" aria-label="Buscar lección"></div>
+  <section class="keyo" id="keyo"><h2>Qué se ha aplicado a Keyo</h2><p>Cargando…</p></section>
+  <div class="search"><input id="q" type="search" placeholder="Buscar un tema: garantías, guías, Meta, novedades…" aria-label="Buscar lección"><label class="toggle"><input type="checkbox" id="solo"> Solo las lecciones que tocan a Keyo</label></div>
   <main id="list" class="wrap" style="gap:26px"><p class="empty">Cargando temario…</p></main>
 </div>
 
@@ -68,7 +88,16 @@ const KEY_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 const G={marca:["Para marca y proveedor","lo que nos toca como Keyo"],vender:["Para vender","lado dropshipper y pauta"],chatea:["Chatea Pro","WhatsApp y automatización"],finanzas:["Finanzas",""]};
 const GRUPO={81:"marca",82:"marca",87:"marca",90:"marca",84:"vender",85:"vender",86:"vender",88:"vender",83:"vender",89:"vender",100:"finanzas",101:"finanzas"};
 const ORDEN=[81,82,87,90,84,85,86,88,83,89,91,92,93,94,95,96,97,98,99,100,101];
-const CLAVE=new Set([81,87,90,84,89]);
+const EST={hecho:["Hecho","#2e9a52"],en_curso:["En curso","#d9a21b"],falta:["Falta","#d4452f"],por_verificar:["Por verificar","#4a78c2"],en_espera:["Espera primer pedido","#a39d93"]};
+const ORD_E=["hecho","en_curso","falta","por_verificar","en_espera"];
+let K=[];
+const chip=e=>`<span class="est e-${e}">${(EST[e]||[e])[0]}</span>`;
+function keyo(){const n=K.length,c={};K.forEach(p=>c[p.estado]=(c[p.estado]||0)+1);
+const lec=C.reduce((a,x)=>a+x.lecciones.filter(l=>l.k.length).length,0),tot=C.reduce((a,x)=>a+x.lecciones.length,0),cur=C.filter(x=>x.lecciones.some(l=>l.k.length)).length;
+const bar=ORD_E.filter(e=>c[e]).map(e=>`<i style="flex:${c[e]};background:${EST[e][1]}"></i>`).join('');
+const leg=ORD_E.filter(e=>c[e]).map(e=>`<span><span class="dot" style="background:${EST[e][1]}"></span>${EST[e][0]} <b>${c[e]}</b></span>`).join('');
+const lista=ORD_E.map(e=>K.filter(p=>p.estado===e).map(p=>`<li>${chip(p.estado)}<div><div>${esc(p.nombre)}</div>${p.evidencia?`<div class="ev">${esc(p.evidencia)}</div>`:''}<div class="de">Sale de: ${esc([...new Set(p.lecciones)].join(' · '))}</div></div></li>`).join('')).join('');
+document.getElementById('keyo').innerHTML=`<h2>Qué se ha aplicado a Keyo</h2><p>De ${tot} lecciones, <b style="color:var(--fg)">${lec}</b> (en ${cur} cursos) se volvieron <b style="color:var(--fg)">${n} pasos</b> concretos para Keyo en Dropi. El resto es contexto o aplica a otros frentes.</p><div class="bar">${bar}</div><div class="leg">${leg}</div><details><summary>Ver los ${n} pasos y de qué lección salen</summary><ul class="pasos" style="margin-top:8px">${lista}</ul></details>`;}
 let C=[];
 const isQuiz=t=>/quiz/i.test(t);
 const esc=s=>s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
@@ -77,16 +106,16 @@ const limpia=n=>n.replace(/^Chatea Pro:\s*/i,'');
 function hl(t,q){if(!q)return esc(t);const i=norm(t).indexOf(q);if(i<0)return esc(t);return esc(t.slice(0,i))+'<mark>'+esc(t.slice(i,i+q.length))+'</mark>'+esc(t.slice(i+q.length));}
 function stats(at){const total=C.reduce((a,c)=>a+c.lecciones.length,0),qz=C.reduce((a,c)=>a+c.lecciones.filter(l=>isQuiz(l.t)).length,0),tx=C.reduce((a,c)=>a+c.lecciones.filter(l=>l.tx&&!isQuiz(l.t)).length,0);
 document.getElementById('stats').innerHTML=`<span class="stat"><b>${C.length}</b> cursos</span><span class="stat"><b>${total}</b> lecciones</span><span class="stat"><b>${qz}</b> cuestionarios</span><span class="stat"><b>${tx}</b> con video transcrito</span><span class="stat">Al día: ${new Date(at).toLocaleString('es-CO',{dateStyle:'medium',timeStyle:'short'})}</span>`;}
-function render(){const q=norm(document.getElementById('q').value.trim());const list=document.getElementById('list');let html='',any=false;
-for(const g of Object.keys(G)){const cs=C.filter(c=>(GRUPO[c.id]||'chatea')===g).map(c=>({c,ls:c.lecciones.filter(x=>!q||norm(x.t).includes(q)||norm(c.nombre).includes(q))})).filter(x=>x.ls.length);
+function render(){const q=norm(document.getElementById('q').value.trim());const list=document.getElementById('list');const solo=document.getElementById('solo').checked;let html='',any=false;
+for(const g of Object.keys(G)){const cs=C.filter(c=>(GRUPO[c.id]||'chatea')===g).map(c=>({c,ls:c.lecciones.filter(x=>(!solo||x.k.length)&&(!q||norm(x.t).includes(q)||norm(c.nombre).includes(q)))})).filter(x=>x.ls.length);
 if(!cs.length)continue;any=true;html+=`<section class="group"><h2>${G[g][0]} ${G[g][1]?`<span>· ${G[g][1]}</span>`:''}</h2>`;
 for(const {c,ls} of cs){const n=c.lecciones.length,nq=c.lecciones.filter(l=>isQuiz(l.t)).length;
-html+=`<details ${q?'open':''}><summary><span class="arrow">›</span><span class="name">${hl(limpia(c.nombre),q)}</span>${CLAVE.has(c.id)?'<span class="tag">clave para Keyo</span>':''}<span class="count">${n} lecciones${nq?` · ${nq} quiz`:''}</span></summary><ol>`;
-for(const x of ls)html+=`<li class="${isQuiz(x.t)?'quiz':''}"><span class="n">${x.o}</span><span>${hl(x.t,q)}</span></li>`;html+='</ol></details>';}
+html+=`<details ${q||solo?'open':''}><summary><span class="arrow">›</span><span class="name">${hl(limpia(c.nombre),q)}</span>${(()=>{const m=c.lecciones.filter(l=>l.k.length).length;return m?`<span class="tag">${m} ${m>1?'lecciones':'lección'} → Keyo</span>`:''})()}<span class="count">${n} lecciones${nq?` · ${nq} quiz`:''}</span></summary><ol>`;
+for(const x of ls)html+=`<li class="${isQuiz(x.t)?'quiz':''}"><span class="n">${x.o}</span><span>${hl(x.t,q)}${x.k.length?`<span class="ks">${x.k.map(z=>`<span class="est e-${z.e}" title="${esc(z.n)}">Keyo: ${esc(z.n.length>48?z.n.slice(0,46)+'…':z.n)} · ${(EST[z.e]||[z.e])[0]}</span>`).join('')}</span>`:''}</span></li>`;html+='</ol></details>';}
 html+='</section>';}
 list.innerHTML=any?html:'<p class="empty">Ninguna lección tiene ese tema. Prueba con otra palabra.</p>';}
-document.getElementById('q').addEventListener('input',render);
-fetch(API,{headers:{Authorization:'Bearer '+KEY_ANON,apikey:KEY_ANON}}).then(r=>r.json()).then(d=>{C=d.cursos.sort((a,b)=>(ORDEN.indexOf(a.id)+1||99)-(ORDEN.indexOf(b.id)+1||99));stats(d.actualizado);render();})
+document.getElementById('q').addEventListener('input',render);document.getElementById('solo').addEventListener('change',render);
+fetch(API,{headers:{Authorization:'Bearer '+KEY_ANON,apikey:KEY_ANON}}).then(r=>r.json()).then(d=>{C=d.cursos.sort((a,b)=>(ORDEN.indexOf(a.id)+1||99)-(ORDEN.indexOf(b.id)+1||99));K=d.keyo||[];stats(d.actualizado);keyo();render();})
 .catch(()=>{document.getElementById('list').innerHTML='<p class="empty">No se pudo cargar el temario. Recarga la página en un momento.</p>';});
 </script>
 </body></html>
